@@ -31,7 +31,7 @@ def extract_transcript_details(youtube_video_url):
             raise ValueError("Invalid YouTube URL format.")
 
         # Attempt to fetch transcript
-        transcript_text = YouTubeTranscriptApi.get_transcript(video_id, , proxies={"https": "http://localhost:8501"})
+        transcript_text = YouTubeTranscriptApi.get_transcript(video_id, proxies={"https": "http://localhost:8501"})
         
         transcript = " ".join([i["text"] for i in transcript_text])
         
