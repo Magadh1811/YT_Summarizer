@@ -18,19 +18,28 @@ to provide an accurate and insightful overview of the video's content.
 """
 
 ## Function to extract transcript details from a YouTube video
+from youtube_transcript_api import YouTubeTranscriptApi, VideoUnavailable
+
+## Function to extract transcript details from a YouTube video
 def extract_transcript_details(youtube_video_url):
     try:
-        video_id_match = re.search(r"(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([a-zA-Z0-9_-]{11})", youtube_video_url)
-
+        video_id_match = re.search(r"(?<=v=)[\w-]+", youtube_video_url)
+        
         if video_id_match:
-            video_id = video_id_match.group(1)
+            video_id = video_id_match.group(0)
         else:
             raise ValueError("Invalid YouTube URL format.")
 
+        # Attempt to fetch transcript
         transcript_text = YouTubeTranscriptApi.get_transcript(video_id)
+        
         transcript = " ".join([i["text"] for i in transcript_text])
+        
         return transcript
-
+    
+    except VideoUnavailable:
+        st.error("Subtitles are disabled for this video or the video is unavailable.")
+        return None
     except Exception as e:
         st.error(f"Error fetching transcript: {e}")
         return None
