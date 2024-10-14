@@ -8,7 +8,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 ## Load environment variables
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key = st.secrets["GOOGLE_API_KEY"])
 
 
 prompt = """You are a professional summarizer for YouTube videos. Given a video transcript, you will generate a clear, concise summary 
