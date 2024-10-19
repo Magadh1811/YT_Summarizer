@@ -3,13 +3,12 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as genai
-from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api import YouTubeTranscriptApi, VideoUnavailable
 
 ## Load environment variables
 load_dotenv()
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
 
 prompt = """You are a professional summarizer for YouTube videos. Given a video transcript, you will generate a clear, concise summary 
 highlighting the key points and takeaways. The summary should be structured in bullet points, focusing on the most important information. 
@@ -18,25 +17,22 @@ to provide an accurate and insightful overview of the video's content.
 """
 
 ## Function to extract transcript details from a YouTube video
-from youtube_transcript_api import YouTubeTranscriptApi, VideoUnavailable
-
-## Function to extract transcript details from a YouTube video
 def extract_transcript_details(youtube_video_url):
     try:
-        video_id_match = re.search(r"(?<=v=)[\w-]+", youtube_video_url)
-        
+        # Modified regex to capture more YouTube URL formats
+        video_id_match = re.search(r"(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([a-zA-Z0-9_-]{11})", youtube_video_url)
+
         if video_id_match:
-            video_id = video_id_match.group(0)
+            video_id = video_id_match.group(1)
         else:
             raise ValueError("Invalid YouTube URL format.")
 
-        # Attempt to fetch transcript
-        transcript_text = YouTubeTranscriptApi.get_transcript(video_id, proxies={"https": "http://localhost:443"})
-        
+        # Attempt to fetch transcript with optional proxy settings
+        transcript_text = YouTubeTranscriptApi.get_transcript(video_id)
         transcript = " ".join([i["text"] for i in transcript_text])
-        
+
         return transcript
-    
+
     except VideoUnavailable:
         st.error("Subtitles are disabled for this video or the video is unavailable.")
         return None
@@ -113,12 +109,14 @@ def main():
 
             if summary:
                 st.success("Done!")
+                # Extract video ID from the provided link for displaying the thumbnail
                 video_id_match = re.search(r"(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([a-zA-Z0-9_-]{11})", youtube_link)
                 if video_id_match:
                     video_id = video_id_match.group(1)
                     display_thumbnail_and_summary(video_id, summary)
                 else:
                     st.error("Failed to extract video ID from the provided URL.")
+
 
 if __name__ == "__main__":
     main()
