@@ -10,8 +10,8 @@ Responsive User Interface: Clean and modern UI built with Streamlit, with a dark
 Displays Video Thumbnail: Displays the YouTube video’s thumbnail alongside the summary.
 
 
-Link: [YT_Summarizer](https://ytsummarizer-2vbrxkaau9nf5hmqy8px96.streamlit.app/)
-
+Link: [YT_Summarizer](http://localhost:8501/)
+[https://ytsummarizer-2vbrxkaau9nf5hmqy8px96.streamlit.app/]
 Project Structure
 
 📦 youtube-video-summarizer
