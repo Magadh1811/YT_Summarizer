@@ -11,6 +11,7 @@ Displays Video Thumbnail: Displays the YouTube video’s thumbnail alongside the
 
 
 # Link: [YT_Summarizer](http://localhost:8501/)
+
 ### Note: The code works on the local host because 'youtube-transcript-api' does not work on the sites.
 
 ## Project Structure
