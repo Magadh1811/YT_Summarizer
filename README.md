@@ -11,6 +11,7 @@ Displays Video Thumbnail: Displays the YouTube video’s thumbnail alongside the
 
 
 # Link: [YT_Summarizer](http://localhost:8501/)
+### Note: The code works on the local host because 'youtube-transcript-api' does not work on the sites.
 
 ## Project Structure
 
@@ -28,8 +29,3 @@ Displays Video Thumbnail: Displays the YouTube video’s thumbnail alongside the
 
 The following environment variables are required:
 GOOGLE_API_KEY: Your Google Gemini Pro API key for summarization.
-
-## Troubleshooting
-
-Invalid YouTube URL Error: Ensure the provided YouTube URL contains valid transcripts.
-500 Internal Error (API): This could indicate an issue with the Google Generative AI service. Double-check your API key and retry.
