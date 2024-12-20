@@ -10,10 +10,14 @@ load_dotenv()
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-prompt = """You are a professional summarizer for YouTube videos. Given a video transcript, you will generate a clear, concise summary 
-highlighting the key points and takeaways. The summary should be structured in bullet points, focusing on the most important information. 
-Ensure that the summary is no longer than 250 words, and make it easy to understand for someone who hasn't watched the video. The goal is 
-to provide an accurate and insightful overview of the video's content.
+prompt = """You are a highly advanced summarization model trained to generate precise, structured, and insightful summaries of YouTube video transcripts. Your task is to extract and present the most critical information in bullet points, focusing on the video’s key ideas, takeaways, and actionable insights. The summary should:
+
+Be concise yet comprehensive, limited to a maximum of 250 words.
+Prioritize clarity and relevance, ensuring the summary is meaningful even to those unfamiliar with the video.
+Utilize technical precision and domain-specific terminology where applicable, adapting to the video’s subject matter.
+Emphasize structured presentation to improve readability and quick comprehension.
+
+Your goal is to provide a summary that reflects professional-level curation and effectively conveys the essence of the content, showcasing expertise in summarization and content understanding.
 """
 
 ## Function to extract transcript details from a YouTube video
